@@ -14,7 +14,7 @@
 
 ## 📋 프로젝트 개요
 
-이 프로젝트는 **NVIDIA 최신 Physical AI 기술 스택**을 활용하여 TurtleBot3 기반 자율주행 시스템의 **전生命周期(Lifecycle, 생애주기,라이프사이클)**를 구현합니다.
+이 프로젝트는 **NVIDIA 최신 Physical AI 기술 스택**을 활용하여 TurtleBot3 기반 자율주행 시스템의 **전生命周期**를 구현합니다.
 
 | 단계 | 설명 | 핵심 기술 |
 |------|------|-----------|
@@ -140,14 +140,18 @@ nvidia-turtlebos3_double/
 
 ### 1. 시스템 요구사항
 
-| 구성 요소 | 최소 사양 | 권장 사양 |
-|-----------|-----------|-----------|
-| **GPU** | NVIDIA RTX 3060 (12GB) | **NVIDIA RTX 4090 (24GB)** |
-| **CPU** | Intel i7-12xxx / AMD Ryzen 7 | Intel i9 / AMD Ryzen 9 |
-| **RAM** | 32GB | **64GB** |
-| **Storage** | 100GB | 500GB NVMe SSD |
-| **OS** | **Ubuntu 22.04 LTS** | Ubuntu 22.04 LTS |
-| **Docker** | 24+ | 24+ |
+| 구성 요소 | 최소 사양 | 권장 사양 | 보유 현황 🖥️ |
+|-----------|-----------|-----------|---------------|
+| **GPU** | NVIDIA RTX 3060 (12GB) | **NVIDIA RTX 4090 (24GB)** | **RTX 5090 24GB** ✅ |
+| **CPU** | Intel i7-12xxx / AMD Ryzen 7 | Intel i9 / AMD Ryzen 9 | Core Ultra 9 ✅ |
+| **RAM** | 32GB | **64GB** | 32GB ⚠️ |
+| **Storage** | 100GB | 500GB NVMe SSD | **4TB** ✅ |
+| **OS** | **Ubuntu 22.04 LTS** | Ubuntu 22.04 LTS | Ubuntu 22.04 LTS ✅ |
+| **Docker** | 24+ | 24+ | - |
+
+> **보유 장비**: ASUS 2025 ROG Strix SCAR 16 (코어 Ultra 9, RTX 5090 24GB, 4TB, 32GB, Ubuntu 22.04 LTS)
+>
+> ⚠️ **RAM 32GB**는 Isaac Lab 대규모 병렬 학습(256 env) 시 부족할 수 있습니다. `--num_envs 64`로 조정하거나 SWAP을 활용하세요. RTX 5090 24GB는 권장 사양을 상회하므로 GPU 병목은 없습니다.
 
 ### 2. 설치 개요
 

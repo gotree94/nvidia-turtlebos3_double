@@ -1,0 +1,45 @@
+# Digital Twin Loop Configuration
+# ============================================
+
+workspace: "/workspace"
+db_path: "data/episode_db.sqlite"
+registry_path: "config/policy_registry.json"
+sim_baseline_path: "results/sim2real_eval.json"
+
+# ========== Gap Analyzer Settings ==========
+analyzer_config:
+  success_rate_gap_threshold: 0.15    # SR 15% 이상 차이 → 재학습
+  collision_rate_gap_threshold: 0.10  # 충돌률 10% 이상 차이 → 재학습
+  min_episodes_for_analysis: 10       # 최소 10 에피소드 이상 수집 후 분석
+  window_size: 50                     # 최근 50개 에피소드 기준
+  weight_success_rate: 0.5
+  weight_collision_rate: 0.3
+  weight_path_efficiency: 0.2
+
+# ========== Retrain Pipeline Settings ==========
+retrain_config:
+  num_envs: 128                        # 재학습 병렬 환경 수 (초기보다 적게)
+  max_iterations: 500                  # 재학습 최대 반복
+  min_success_rate_for_deploy: 0.7     # 70% 미만이면 배포 보류
+  max_training_samples: 5000           # DB에서 가져올 최대 샘플 수
+
+# ========== Cycle Settings ==========
+cycle_config:
+  analysis_interval: 300               # 5분마다 갭 분석
+  min_cycle_interval: 3600             # 최소 1시간 간격으로 재학습
+  auto_retrain: true                   # 자동 재학습 활성화
+  max_backups_to_keep: 3               # 최대 백업 정책 수
+
+# ========== Deployment ==========
+deployment:
+  strategy: "blue_green"               # 블루-그린 배포
+  deploy_dir: "deployed_policies"
+  auto_restart_service: true
+  service_name: "turtlebot3-policy"
+
+# ========== Monitoring ==========
+monitoring:
+  prometheus_port: 8000
+  metrics_history_size: 1000
+  alert_on_failure: true
+  notify_on_deploy: true

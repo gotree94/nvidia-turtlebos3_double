@@ -12,6 +12,9 @@
 
 ---
 
+<img src="TOP.png">
+
+
 ## 📋 프로젝트 개요
 
 이 프로젝트는 **NVIDIA 최신 Physical AI 기술 스택**을 활용하여 TurtleBot3 기반 자율주행 시스템의 **전生命周期**를 구현합니다.

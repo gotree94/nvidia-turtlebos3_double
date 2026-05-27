@@ -21,7 +21,7 @@
 
 ---
 
-<img src="011.png" width="120%">
+<img src="011.png" width="110%">
 
 
 ## 1. 전문가 종합 검토 의견

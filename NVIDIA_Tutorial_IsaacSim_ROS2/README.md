@@ -489,9 +489,9 @@ Congratulations, your robot and policy are working correctly in Isaac Sim now an
 
 Please read this article on [deploying a reinforcement learning policy to a Spot robot](https://devblogs.nvidia.com/deploying-robust-locomotion-policies-to-a-real-robot/).
 
-# Running a Reinforcement Learning Policy through ROS 2 and Isaac Sim
+## Running a Reinforcement Learning Policy through ROS 2 and Isaac Sim
 
-## Learning Objectives
+### Learning Objectives
 
 In this example, you learn to run a reinforcement learning policy through ROS 2 and Isaac Sim. You will learn to:
 
@@ -500,9 +500,9 @@ In this example, you learn to run a reinforcement learning policy through ROS 2 
 
 ---
 
-## Getting Started
+### Getting Started
 
-### Prerequisite
+#### Prerequisite
 
 - The `torch` package is required to run this sample. Follow the [PyTorch installation instructions](https://pytorch.org/get-started/locally/) to install it (if not already installed). Since PyTorch will run on a separate process, no specific version is required (it doesn't have to match Isaac Sim's PyTorch version).
 - Enable the `isaacsim.ros2.bridge` Extension in the Extension Manager window by navigating to **Window > Extensions**.
@@ -515,13 +515,13 @@ In this example, you learn to run a reinforcement learning policy through ROS 2 
 
 ---
 
-## About the H1 Flat Terrain Locomotion Policy
+### About the H1 Flat Terrain Locomotion Policy
 
 The policy is trained based on the `Isaac-Velocity-Flat-H1-v0` environment from Isaac Lab. This policy tracks a velocity command on a flat terrain for the H1 humanoid robot. The policy is capable of walking forward and turning left/right. The policy does **not** support moving backwards nor sideways.
 
 ---
 
-## Set Up Robot Joint Configurations
+### Set Up Robot Joint Configurations
 
 Follow the steps in [Tutorial 13: Rigging a Legged Robot for Locomotion Policy](https://docs.omniverse.nvidia.com/isaacsim/latest/tutorials/rigging_legged_robot.html) to setup the robot joint configurations based on the locomotion policy parameter. This step is very important, because mismatching the joint configurations can result in unexpected robot behavior.
 
@@ -533,7 +533,7 @@ The rigged H1 robot is available in the content browser at `Isaac/Samples/Riggin
 
 ---
 
-## Add IMU Sensor
+### Add IMU Sensor
 
 Use the IMU sensor to obtain the body frame linear acceleration, angular velocity, and orientation. The flat terrain policy requires the linear velocity, angular velocity, and gravity vector from the pelvis link. You need to add an IMU sensor to the pelvis link to compute these values.
 
@@ -544,7 +544,7 @@ You can create an IMU sensor by right clicking on the `/h1/pelvis` and select **
 
 ---
 
-## Set up ROS 2 Node for the H1 Humanoid Robot
+### Set up ROS 2 Node for the H1 Humanoid Robot
 
 The ROS 2 node publishes the observations and receives the actions from Isaac Sim. As specified in the environment definition file, the observations requires the following information:
 
@@ -562,7 +562,7 @@ The action is a joint state message, which is a dictionary of joint names and th
 
 In this section, we will setup OmniGraph nodes that publishes the observations and receives the actions from Isaac Sim on physics step.
 
-### Create an On Demand OmniGraph
+#### Create an On Demand OmniGraph
 
 1. Open the H1 Unitree robot model that you rigged in the [Tutorial 13: Rigging a Legged Robot for Locomotion Policy](https://docs.omniverse.nvidia.com/isaacsim/latest/tutorials/rigging_legged_robot.html) tutorial.
 2. Create a scope to hold the ActionGraphs by right clicking on the stage and selecting **Create > Scope**, rename it "Graph".
@@ -572,7 +572,7 @@ In this section, we will setup OmniGraph nodes that publishes the observations a
 
 This will ensure the ActionGraph node runs when the Isaac Sim physics steps.
 
-### Create Imu Publisher Node
+#### Create Imu Publisher Node
 
 This node publishes the IMU data to ROS 2, which contains the body frame linear acceleration, angular velocity, and orientation.
 
@@ -614,11 +614,11 @@ This node publishes the joint states to ROS 2, which contains the joint names, p
 
 ---
 
-## Publish ROS Clock and Set Up Environment
+### Publish ROS Clock and Set Up Environment
 
 Now that the asset is set up, create a simulation scenario to place the robot in, configure the physics settings, and ROS time publish.
 
-### Setup Simulation Scenario
+#### Setup Simulation Scenario
 
 1. Create a new file. In the Content Browser, go to `Isaac Sim/Environments/Simple_Warehouse` and drag the `warehouse.usd` asset into the stage.
 2. Drag and drop the `h1_ROS.usd` asset that you made earlier into the stage. Set the Z transform to 1.0 so it is above the ground.
@@ -628,7 +628,7 @@ Now that the asset is set up, create a simulation scenario to place the robot in
    - Uncheck **Enable GPU Dynamics**
    - Set the **Broadphase Type** to MBP
 
-### Setup ROS 2 Clock Publisher
+#### Setup ROS 2 Clock Publisher
 
 1. Create a new ActionGraph node and rename it to "ROS_Clock".
 2. Set the `pipelineStage` to `pipelineStageOnDemand`.
@@ -646,7 +646,7 @@ Now that the asset is set up, create a simulation scenario to place the robot in
 
 ---
 
-## Run ROS 2 Policy
+### Run ROS 2 Policy
 
 The asset is set up, you can run the ROS 2 policy. Build the ROS 2 workspace and source the `setup.bash` file.
 
@@ -684,7 +684,7 @@ You can now control the H1 humanoid robot using your keyboard. Try the controls 
 
 ---
 
-## Summary
+### Summary
 
 This tutorial covered:
 
@@ -693,13 +693,13 @@ This tutorial covered:
 
 ---
 
-# Instanceable Assets
+## Instanceable Assets
 
 Reinforcement learning often requires training in large simulation scenes with multiple clones of the same robots. As we add more and more robots into the simulation environment, the memory consumption also increases for each additional set of robot and mesh assets added. To reduce memory consumption, we can take advantage of USD's Scenegraph Instancing functionality to mark common meshes shared by different copies of the same robots as instanceable.
 
 By doing so, each copy of the robot will reference a single copy of meshes, avoiding the need to create multiple copies of the same meshes in the scene, thus reducing memory usage in the overall simulation environment.
 
-## Learning Objectives
+### Learning Objectives
 
 In this tutorial, we will show how to create instanceable assets in Isaac Sim. We will:
 
@@ -709,13 +709,13 @@ In this tutorial, we will show how to create instanceable assets in Isaac Sim. W
 
 *10-15 Minute Tutorial*
 
-## Getting Started
+### Getting Started
 
 Please refer to [USD Documentation on Scenegraph Instancing](https://graphics.pixar.com/usd/release/glossary.html#usdglossary-instancing) for more details on instancing.
 
 Please refer to [Tutorial: Import URDF](https://docs.omniverse.nvidia.com/isaacsim/latest/ros2_tutorials/tutorial_ros2_urdf_import.html) and [Tutorial: Import MJCF](https://docs.omniverse.nvidia.com/isaacsim/latest/tutorials/import_mjcf.html) for more details on importer functionalities.
 
-## Hierarchy Requirement for Instanceable Assets
+### Hierarchy Requirement for Instanceable Assets
 
 USD prohibits modifying properties of prims on descendants of instanced prims. Therefore, we generally only perform instancing on mesh prims for robot assets, since properties on meshes will not differ across different environments during simulation. However, the transforms of the meshes may be different during simulation when robots in each environment are being moved in varying ways. Thus, we have to define the topology of our robot hierarchy in a specific structure in the asset tree definition in order for the instanceable flag to take action.
 
@@ -745,7 +745,7 @@ World
 
 Any references that exist on the original Sphere and Box prims would have to be moved to `Sphere_Xform` and `Box_Xform` prims.
 
-## Using URDF and MJCF Importers
+### Using URDF and MJCF Importers
 
 Isaac Sim provides two importers — URDF and MJCF — for converting robot assets to USD format to be used in Isaac Sim. Both importers support the option to import robot assets directly as instanceable assets. By selecting this option, imported assets will be split into two separate USD files that follow the above hierarchy definition. Any mesh data will be written to a USD stage to be referenced by the main USD stage, which contains the main robot definition.
 
@@ -758,13 +758,13 @@ Once the asset is imported with these options enabled, you will see the robot de
 
 To add our instanced asset into a new stage, we will simply need to add our master USD file.
 
-## Modifying Existing Assets
+### Modifying Existing Assets
 
 Due to limitations of the topology requirement for making assets instanceable, it is not as straightforward to convert existing non-instanceable assets to become instanceable. Here, we will try to provide a few small utility methods to help make the process simpler.
 
 All utilities should be copied into and run from the Script Editor, which can be opened from **Window > Script Editor**.
 
-### Creating Parent Xforms
+#### Creating Parent Xforms
 
 First, we need to make sure our existing asset follows the hierarchy constraint defined above, where all mesh prims have a parent XForm prim present that can be used to mark the prim as instanceable. To help with the process of creating new parent prims, we provide a utility method `create_parent_xforms()` below to automatically insert a new Xform prim as a parent of every mesh prim in the stage.
 
@@ -885,27 +885,13 @@ This tutorial covered the following topics:
 
 ---
 
-# ROS 2
+## ROS 2
 
 ROS (Robot Operating System) is a set of software libraries and tools for building robotics applications. Isaac Sim is connected to ROS through the ROS 2 bridge extension. We recommend ROS 2 Humble and Jazzy with NVIDIA Isaac Sim.
 
 The following tutorials detail the process of extracting and manipulating synthetic data generated by NVIDIA Isaac Sim and publishing them to your ROS applications.
 
----
-
-## Table of Contents
-
-- [ROS 2 Installation](#ros-2-installation)
-- [ROS 2 Tutorials (Linux and Windows)](#ros-2-tutorials-linux-and-windows)
-- [NVIDIA Isaac ROS](#nvidia-isaac-ros)
-- [ROS 2 Reference Architecture](#ros-2-reference-architecture)
-- [Frequently Used Scenarios](#frequently-used-scenarios)
-- [URDF Import and Export](#urdf-import-and-export)
-- [ROS 2 Troubleshooting](#ros-2-troubleshooting)
-
----
-
-## ROS 2 Installation
+### ROS 2 Installation
 
 - Install Summary Steps
 - Install ROS 2

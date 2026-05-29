@@ -27,6 +27,12 @@
 
 ---
 
+https://meet.google.com/pta-ndbn-byo
+
+https://chat.google.com/u/8/app/home
+
+---
+
 <img src="TOP.png">
 
 

@@ -502,3 +502,35 @@ python3 -c "import torch; print(torch.__version__); print(torch.cuda.is_availabl
 | Docker GPU 접근 불가 | `could not select device driver` | `nvidia-ctk runtime configure --runtime=docker` 실행 |
 | Isaac Lab 설치 실패 | Python 버전 충돌 | Python 3.10 정확히 사용, conda 환경 재생성 |
 | Cosmos OOM | 추론 중 메모리 부족 | 배치 사이즈 1로 설정, fp16 사용 |
+
+---
+
+
+2:08 PMClaude 응답: Terminator 터미널 사용법Terminator 터미널 사용법
+설치
+bashsudo apt install terminator
+핵심 단축키
+화면 분할
+단축키기능Ctrl+Shift+E세로 분할 (좌/우)Ctrl+Shift+O가로 분할 (위/아래)Ctrl+Shift+W현재 패널 닫기
+패널 이동
+단축키기능Alt+방향키인접 패널로 이동Ctrl+Tab다음 패널로 순환
+탭
+단축키기능Ctrl+Shift+T새 탭 열기Ctrl+PageUp/Down탭 전환
+기타 유용한 기능
+단축키기능Ctrl+Shift+X현재 패널 전체화면 토글Ctrl+Shift+Z현재 패널 줌 (나머지 숨김)Ctrl+Shift+F텍스트 검색Ctrl+Shift+C/V복사/붙여넣기Ctrl++ / Ctrl+-글자 크기 조절
+실전 활용 예시 (ROS 2 개발)
+Terminator는 ROS 2처럼 여러 터미널이 동시에 필요한 작업에 특히 유용합니다.
+┌─────────────────┬─────────────────┐
+│                 │                 │
+│  ros2 launch    │  ros2 topic     │
+│  turtlebot3...  │  echo /scan     │
+│                 │                 │
+├─────────────────┴─────────────────┤
+│                                   │
+│  rviz2 / rqt_graph 모니터링       │
+│                                   │
+└───────────────────────────────────┘
+레이아웃 저장 (자주 쓰는 배치 저장)
+bash# ~/.config/terminator/config 파일로 관리
+# GUI에서: 우클릭 → Preferences → Layouts 탭에서 저장 가능
+ROS 2 + TurtleBot3 작업 시 패널 3~4개 분할해서 launch, topic echo, rviz2, teleop 동시 실행하면 매우 편리합니다.

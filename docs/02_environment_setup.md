@@ -699,3 +699,73 @@ Bash
 source /opt/ros/humble/setup.bash
 rviz2 -d ~/IsaacSim-ros_workspaces/humble_ws/src/isaac_tutorials/rviz2/rtx_lidar.rviz
 
+---
+
+
+ROS2(Robot Operating System 2) 개발 및 디버깅 과정에서 가장 빈번하게 사용되는 핵심 명령어들을 기능별로 분류하여 정리한 마크다운 문서입니다.
+
+1. 노드 관리 및 확인 (Node)
+실행 중인 ROS2 노드의 상태를 확인하고 정보를 얻는 명령어입니다.
+
+명령어	기능 설명
+ros2 node list	현재 시스템에서 활성화되어 실행 중인 모든 노드의 목록을 출력합니다.
+ros2 node info <node_name>	특정 노드의 상세 정보(구독하는 토픽, 발행하는 토픽, 제공하는 서비스, 액션 등)를 확인합니다.
+2. 토픽 (Topic)
+노드 간에 연속적인 데이터 스트림(메시지)을 주고받는 토픽을 관리하고 모니터링합니다.
+
+명령어	기능 설명
+ros2 topic list	현재 활성화된 모든 토픽의 목록을 표시합니다. (-t 옵션을 붙이면 토픽의 메시지 타입도 함께 출력)
+ros2 topic info <topic_name>	특정 토픽의 메시지 타입 및 해당 토픽에 연결된 Publisher(발행자)와 Subscriber(구독자)의 수를 확인합니다.
+ros2 topic echo <topic_name>	지정한 토픽으로 발행되는 데이터를 실시간으로 터미널에 출력(모니터링)합니다.
+ros2 topic hz <topic_name>	특정 토픽의 메시지 발행 주파수(Hz)를 측정합니다.
+ros2 topic bw <topic_name>	특정 토픽이 소모하고 있는 대역폭(Bandwidth)을 대략적으로 측정합니다.
+ros2 topic pub <topic_name> <msg_type> "<data>"	터미널에서 직접 특정 토픽으로 메시지를 수동 발행합니다. (예: ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.1}, angular: {z: 0.0}}")
+3. 서비스 (Service)
+동기식 또는 비동기식으로 요청(Request)과 응답(Response)을 주고받는 서비스를 제어합니다.
+
+명령어	기능 설명
+ros2 service list	현재 네트워크 상에서 호출 가능한 모든 서비스 목록을 출력합니다.
+ros2 service type <service_name>	특정 서비스가 사용하는 데이터 타입(해당 .srv 구조)을 확인합니다.
+ros2 service info <service_name>	해당 서비스를 제공하는 노드의 정보를 확인합니다.
+ros2 service call <service_name> <service_type> "<request_data>"	터미널에서 특정 서비스 서버에 요청을 직접 보내고 응답을 받아옵니다.
+4. 액션 (Action)
+피드백(Feedback)과 취소 기능이 포함된 장기 실행 태스크(Goal-Feedback-Result)를 관리합니다.
+
+명령어	기능 설명
+ros2 action list	현재 활성화된 모든 액션의 목록을 확인합니다.
+ros2 action info <action_name>	특정 액션의 상태 및 연결된 Action Server와 Action Client 정보를 확인합니다.
+ros2 action send_goal <action_name> <action_type> "<goal_data>"	터미널에서 액션 서버로 목표(Goal)를 송신하고 피드백 및 최종 결과를 모니터링합니다.
+5. 인터페이스 (Interface / Msg, Srv, Action 구조)
+ROS2에서 사용하는 통신 데이터 구조(msg, srv, action)를 탐색하고 확인합니다.
+
+명령어	기능 설명
+ros2 interface list	시스템 내에 설치된 모든 메시지, 서비스, 액션 인터페이스 유형을 나열합니다.
+ros2 interface show <interface_name>	특정 인터페이스(예: geometry_msgs/msg/Twist)의 내부 데이터 필드 구조와 데이터 타입을 상세히 보여줍니다.
+ros2 interface packages	인터페이스를 포함하고 있는 패키지들의 목록을 확인합니다.
+6. 파라미터 (Parameter)
+실행 중인 노드의 설정 값(전역 변수/설정치)을 동적으로 확인하고 변경합니다.
+
+명령어	기능 설명
+ros2 param list <node_name>	특정 노드가 가지고 있는 모든 파라미터 목록을 보여줍니다.
+ros2 param get <node_name> <param_name>	특정 파라미터의 현재 설정 값을 읽어옵니다.
+ros2 param set <node_name> <param_name> <value>	런타임 중에 특정 파라미터의 값을 동적으로 변경합니다.
+ros2 param dump <node_name>	노드의 현재 파라미터 설정 상태를 YAML 파일 포맷으로 터미널에 출력하거나 파일로 저장할 수 있게 해줍니다.
+7. 실행 및 패키지 관리 (Run, Launch, Pkg)
+노드를 개별적으로 혹은 그룹으로 실행하고 패키지 정보를 관리합니다.
+
+명령어	기능 설명
+ros2 run <package_name> <executable_name>	특정 패키지에 포함된 단일 노드(실행 파일)를 실행합니다.
+ros2 launch <package_name> <launch_file_name>	복수의 노드 실행, 파라미터 로드, 네임스페이스 지정 등을 일괄 처리하는 Launch 파일을 실행합니다.
+ros2 pkg list	시스템에 설치 및 인식된 모든 ROS2 패키지 목록을 출력합니다.
+ros2 pkg executables <package_name>	특정 패키지 내에 포함된 실행 가능한 바이너리/스크립트 목록을 보여줍니다.
+8. 데이터 기록 및 재생 (Bag)
+센서 데이터나 로봇 상태 토픽을 기록하고 나중에 그대로 재생하여 디버깅할 수 있는 도구입니다.
+
+명령어	기능 설명
+ros2 bag record <topic_name1> <topic_name2>	지정한 토픽들의 데이터를 .db3 또는 mcap 파일 포맷으로 기록(저장)합니다. (-a 옵션을 주면 모든 토픽 기록)
+ros2 bag info <bag_file_dir>	기록된 가방(Bag) 파일의 녹화 시간, 메시지 개수, 토픽 목록 등 요약 정보를 확인합니다.
+ros2 bag play <bag_file_dir>	기록된 토픽 데이터를 원래 시점의 타임스탬프에 맞춰 다시 재생(Publish)합니다.
+💡 유용한 팁 (Tip)
+도움말 확인: 모든 명령어 뒤에 --help 또는 -h를 붙이면 해당 명령어의 하위 옵션과 사용 예시를 자세히 볼 수 있습니다. (예: ros2 topic pub --help)
+
+자동 완성(Tab): 터미널에서 ros2 입력 후 Tab 키를 누르면 자동 완성 기능이 지원되어 복잡한 토픽 이름이나 메시지 타입을 쉽게 입력할 수 있습니다. (단, 환경 변수 source /opt/ros/<distro>/setup.bash가 정상 적용된 상태여야 합니다.)
